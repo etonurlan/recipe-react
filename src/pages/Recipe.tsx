@@ -1,15 +1,16 @@
 import { useParams } from "react-router-dom"
 import { useGetMealQuery } from "../store/recipe/recipe.api"
+import { IFood } from "../models/models"
 
 export const Recipe = () => {
     const { title } = useParams()
 
-    const {data} = useGetMealQuery(title)
+    const {data} = useGetMealQuery(title!)
 
     return (
         <div className="my-[15px] mx-[10px]">
             {data?.meals.map((food) => (
-                <div className="bg-[#a38d9c] rounded-md py-[10px] px-[15px] text-[#fff]">
+                <div key={food.idMeal} className="bg-[#a38d9c] rounded-md py-[10px] px-[15px] text-[#fff]">
                     <div className="flex mb-[30px]">
                         <img className="rounded-md mr-[15px]" src={food.strMealThumb} alt="Food Img" />
                         <div>
@@ -20,6 +21,7 @@ export const Recipe = () => {
                             {food.strYoutube ? (
                                 <div>
                                     <iframe
+                                        title="Recipe Video"
                                         src={`https://www.youtube.com/embed/${food.strYoutube.slice(-11)}`}
                                         allowFullScreen 
                                     />
@@ -37,16 +39,16 @@ export const Recipe = () => {
                         </thead>
                         <tbody>
                             {Object.keys(food).map((key) => {
-                                if (key.includes('Ingredient') && food[key]) {
+                                if (key.includes('Ingredient') && food[key as keyof IFood]) {
                                     return (
                                         <tr key={key}>
-                                            <td className="pl-[10px] border-[3px] border-white">{food[key]}</td>
+                                            <td className="pl-[10px] border-[3px] border-white">{food[key as keyof IFood]}</td>
                                             <td className="pl-[10px] border-[3px] border-white">
                                                 {
                                                     food[
                                                         `strMeasure${key.slice(
                                                             13
-                                                        )}`
+                                                        )}` as keyof IFood
                                                     ]
                                                 }
                                             </td>

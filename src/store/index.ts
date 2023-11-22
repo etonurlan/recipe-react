@@ -1,4 +1,4 @@
-import { configureStore, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 
 import { recipeApi } from "./recipe/recipe.api";
 

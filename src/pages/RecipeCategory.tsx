@@ -6,12 +6,12 @@ import { useGetMealByCategoryQuery } from "../store/recipe/recipe.api"
 export const RecipeCategory = () => {
     const {title} = useParams()
 
-    const {data} = useGetMealByCategoryQuery(title)
+    const {data} = useGetMealByCategoryQuery(title!)
 
     return (
         <div className="grid grid-cols-3 gap-4 my-[15px] mx-[10px]">
             {data?.meals?.map((food) => (
-                <Link to={`/recipe/${food.strMeal}`}>
+                <Link key={food.idMeal} to={`/recipe/${food.strMeal}`}>
                     <div className="bg-[#a38d9c] rounded-md py-[10px] px-[15px]
                     cursor-pointer text-[#fff] h-[100%]">
                         <img className="rounded-md mb-[10px] bg-white w-[100%]"
